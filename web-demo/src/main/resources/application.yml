@@ -1,0 +1,41 @@
+# http://stackoverflow.com/questions/6541757/when-using-spring-mvc-for-rest-how-do-you-enable-jackson-to-pretty-print-render/25949528#25949528[When using Spring MVC for REST, how do you enable Jackson to pretty-print rendered JSON? - Stack Overflow]
+server:
+  port: 8888
+
+spring:
+  profiles:
+    active: @activeProfile@
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: password
+    tomcat:
+      test-on-borrow: true
+      validation-query: 'select 1'
+      init-s-q-l: 'set names utf8mb4;'
+
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        dialect: org.hibernate.dialect.MySQL5Dialect
+
+---
+
+spring:
+  profiles: dev
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+#        hbm2ddl:
+#          auto: update
+
+---
+
+spring:
+  profiles: production
